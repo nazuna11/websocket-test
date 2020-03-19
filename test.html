@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello WebSocket!!</title>
+</head>
+<body>
+  <p>メッセージをどうぞ</p>
+  <input type="text" id="name">
+  <input type="text" id="message">
+  <button type="button" id="form-button">入力</button>
+  <div id="form-text"></div>
+  <ul id="list"></ul>
+
+  <script>
+    let socket = new WebSocket('ws://localhost:8080');
+    var number=0;
+
+    socket.addEventListener('error', () => {
+      alert('サーバーへの接続に失敗しました');
+    });
+
+    socket.addEventListener('open', () => {
+      console.log('サーバーに接続しました');
+    });
+
+    socket.addEventListener('message', (e) => {
+      console.log(`サーバーよりメッセージを受信しました: ${e.data}`);
+      var elem = document.createElement('li');
+      number++;
+      elem.id = 'item' + number;
+      var caption = document.createTextNode(e.data);
+      elem.appendChild(caption);
+      document.getElementById('list').appendChild(elem);
+    });
+
+    document.getElementById("form-button").addEventListener('click', () => {
+      var message = document.getElementById("message").value;
+      var name = document.getElementById("name").value;
+      socket.send(JSON.stringify({"name":name, "message":message}));
+    });
+  </script>
+
+</body>
+</html>
