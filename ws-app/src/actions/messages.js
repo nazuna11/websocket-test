@@ -12,9 +12,10 @@ export const closeWebsocket = () => {
   return () => ws.close()
 }
 
-export const createMessage = (text) => {
+export const createMessage = (user, text) => {
   return () => {
     const message = {
+      user: user,
       text: text,
     }
 

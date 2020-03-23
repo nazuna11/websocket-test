@@ -4,9 +4,9 @@ import MessageForm from './MessageForm'
 import { initWebsocket, closeWebsocket } from '../actions/messages'
 
 
-const Message = ({ text }) => (
+const Message = ({ user, text }) => (
   <li>
-    { text }
+    {user}: { text }
   </li>
 )
 
@@ -25,7 +25,7 @@ class Messages extends React.Component {
   }
 
   render() {
-    const messages = (this.props.message.list.slice().reverse().map((message, i) => <Message key={ i } { ...message }/>))
+    const messages = (this.props.message.list.slice().reverse().map((message, i) => <Message key={ i } { ...message }/>));
 
     return (
       <div>

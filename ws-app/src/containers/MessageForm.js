@@ -8,7 +8,8 @@ let MessageForm = ({ dispatch }) => {
     const message = input.value.trim()
 
     if (!message) return
-    dispatch(createMessage(message))
+    // TODO: get user name from store? 
+    dispatch(createMessage('nanashi', message))
     input.value = ''
   }
   return (
