@@ -8,15 +8,29 @@ import Messages from './containers/Messages'
 import reducer from './reducers'
 // import registerServiceWorker from './registerServiceWorker'
 
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = createStore(
-  reducer,
+  persistedReducer,
   applyMiddleware(thunkMiddleware),
 )
 
+let persistor = persistStore(store);
+
 ReactDOM.render(
   <Provider store={store}>
-    <Messages />
+    <PersistGate loading={null} persistor={persistor}>
+      <Messages />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 )
