@@ -20,7 +20,9 @@ wss.on('connection', (ws) => {
 const allowedOrigins = [
   'http://localhost:8081',
   'https://socket.example.com',
-  'file://'
+  'file://',
+  'http://localhost:8080',
+  'http://localhost:3000'
 ];
 
 /**
